@@ -5,10 +5,12 @@ import {Message} from "./components";
 
 const text = "Text to App.js"
 
-function App(props) {
+function App() {
   return (
-    <div className="App">
-      <Message message = {text}/>
+    <div className="Wrapper">
+      <div className="App">
+        <Message message = {text}/>
+      </div>
     </div>
   );
 }
