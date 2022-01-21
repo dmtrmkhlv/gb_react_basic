@@ -1,20 +1,39 @@
 import './App.css';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import {Message} from "./components";
+import {Button, List, ListItem, Card} from '@mui/material';
+import { nanoid } from 'nanoid';
+console.log(nanoid())
 
 function App() {
+  const timeId = useRef(null);
+  const inputFocus = useRef(null);
   const [messageList, setMessageList] = useState([]);
-  const [timeId, setTimeId] = useState();
+  const chatList = [
+    {
+      id:nanoid(),
+      name: "chat #1"
+    },
+    {
+      id:nanoid(),
+      name: "chat #2"
+    },
+    {
+      id:nanoid(),
+      name: "chat #3"
+    }
+  ];
 
   useEffect(() => {
+    inputFocus.current.focus();
     if (messageList.length === 0) {
       return;
     }
     if (messageList[messageList.length - 1].author !== "admin") {
-      if (timeId) {
-        clearTimeout(timeId);
+      if (timeId.current) {
+        clearTimeout(timeId.current);
       }
-      setTimeId(setTimeout(() => {
+      timeId.current = setTimeout(() => {
         setMessageList([
           ...messageList, {
             author: "admin",
@@ -22,13 +41,18 @@ function App() {
             date: Date.now()
           }
         ]);
-      }, 1500));
+      }, 1500);
     }
   }, [messageList]);
 
   return (
     <div className="Wrapper">
-      <div className="App">
+      <Card className="App">
+        <List className='Chat'>
+        {chatList.map((chat) => {
+                return <ListItem className='Chat__item' key={chat.id}>{chat.name}</ListItem>
+              })}
+        </List>
         <div className='Message__box'>
           <div className='Message__wrapper'>
             <div className='Message__list'>
@@ -50,13 +74,14 @@ function App() {
                 }
               ]);
               e.target.reset();
+              inputFocus.current.focus();
             }
           }}>
-            <input name="text" type="text"/>
-            <button >Send</button>
+            <input ref={inputFocus} name="text" type="text"/>
+            <Button type="submit" variant="contained">Send</Button>
           </form>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

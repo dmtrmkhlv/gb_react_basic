@@ -11,13 +11,27 @@
 
 .App {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.Chat{
+  flex: 1;
+}
+
+.Chat__item{
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.Chat__item:hover{
+  background-color: #e2e2e2;
 }
 
 .Message__box {
   width: 80%;
-  margin: 0 auto;
 }
 
 .Message__wrapper{
@@ -47,6 +61,7 @@
   height: 30px;
   box-sizing: border-box;
   flex: 1;
+  padding-left: 5px;
 }
 
 .Message__form button {
@@ -60,7 +75,6 @@
   max-width: 50%;
   border: 1px solid #e2e2e2;
   box-sizing: border-box;
-  box-shadow: 0px 0px 2px 2px #e2e2e2;
   border-radius: 4px;
   background-color: #e8e8e8;
   margin-bottom: 10px;
