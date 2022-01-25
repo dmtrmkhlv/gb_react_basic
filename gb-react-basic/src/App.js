@@ -3,7 +3,6 @@ import {useState, useEffect, useRef} from 'react';
 import {Message} from "./components";
 import {Button, List, ListItem, Card} from '@mui/material';
 import { nanoid } from 'nanoid';
-console.log(nanoid())
 
 function App() {
   const timeId = useRef(null);
@@ -24,12 +23,21 @@ function App() {
     }
   ];
 
+  const getTail = ((array)=>{
+    return array[array.length - 1];
+  });
+
+  const authorIs = ((name, message)=>{
+    return name === message.author;
+  });
+
   useEffect(() => {
     inputFocus.current.focus();
     if (messageList.length === 0) {
       return;
     }
-    if (messageList[messageList.length - 1].author !== "admin") {
+    // if (messageList[messageList.length - 1].author !== "admin") {
+    if (authorIs("user", getTail((messageList) ))) {
       if (timeId.current) {
         clearTimeout(timeId.current);
       }
