@@ -1,4 +1,4 @@
-import './App.css';
+import styles from './styles/App.module.scss';
 import {useState, useEffect, useRef} from 'react';
 import {Message} from "./components";
 import {Button, List, ListItem, Card} from '@mui/material';
@@ -54,23 +54,23 @@ function App() {
   }, [messageList]);
 
   return (
-    <div className="Wrapper">
-      <Card className="App">
-        <List className='Chat'>
+    <div className={styles.Wrapper}>
+      <Card className={styles.App}>
+        <List className={styles.Chat}>
         {chatList.map((chat) => {
-                return <ListItem className='Chat__item' key={chat.id}>{chat.name}</ListItem>
+                return <ListItem className={styles.Chat__item} key={chat.id}>{chat.name}</ListItem>
               })}
         </List>
-        <div className='Message__box'>
-          <div className='Message__wrapper'>
-            <div className='Message__list'>
+        <div className={styles.Message__box}>
+          <div className={styles.Message__wrapper}>
+            <div className={styles.Message__list}>
               {messageList.map((message) => {
                 return <Message key={message.date} message={message}/>
               })}
             </div>
           </div>
           <form
-            className='Message__form'
+            className={styles.Message__form}
             onSubmit={(e) => {
             e.preventDefault();
             if (e.target.elements.text.value.length > 0) {

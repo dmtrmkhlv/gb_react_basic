@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.Wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.App {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.Chat {
+  flex: 1;
+
+  &__item {
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #e2e2e2;
+    }
+  }
+}
+
+.Message {
+  padding: 5px;
+  max-width: 50%;
+  border: 1px solid #e2e2e2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: #e8e8e8;
+  margin-bottom: 10px;
+  align-self: flex-end;
+
+  &__author {
+    font-size: 10px;
+    text-align: right;
+  }
+
+  &__box {
+    width: 80%;
+  }
+
+  &__wrapper {
+    overflow-y: auto;
+    height: 600px;
+  }
+
+  &__list {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-content: space-between;
+    min-height: 100%;
+    overflow-y: auto;
+    border: 1px solid #e2e2e2;
+    background-color: #f9f9f9;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  &__form {
+    width: 100%;
+    display: flex;
+
+    & input {
+      height: 30px;
+      box-sizing: border-box;
+      flex: 1;
+      padding-left: 5px;
+    }
+
+    & button {
+      height: 30px;
+      width: 100px;
+      cursor: pointer;
+    }
+  }
+
+  &.admin {
+    align-self: flex-start;
+  }
+
+}
