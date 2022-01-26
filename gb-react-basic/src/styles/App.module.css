@@ -1,0 +1,178 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.Wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.App {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.Header__app {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.Header__button {
+  border-radius: 0 !important;
+}
+
+.Header__link {
+  text-decoration: none;
+}
+
+.Chat {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-top: 0 !important;
+}
+
+.Chat__link {
+  text-decoration: none;
+}
+
+.Chat__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+  border-top: 1px solid #e2e2e2;
+  min-height: 45px;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.Chat__item:hover {
+  background-color: #e2e2e2;
+}
+
+.Chat__item:hover .Chat__item__delete {
+  display: initial;
+}
+
+.Chat__item__delete {
+  display: none;
+}
+
+.Message {
+  padding: 5px;
+  max-width: 50%;
+  border: 1px solid #e2e2e2;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 4px;
+  background-color: #e8e8e8;
+  margin-bottom: 10px;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+.Message__author {
+  font-size: 10px;
+  text-align: right;
+}
+
+.Message__box {
+  width: 80%;
+}
+
+.Message__wrapper {
+  overflow-y: auto;
+  height: 600px;
+}
+
+.Message__list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-line-pack: justify;
+      align-content: space-between;
+  min-height: 100%;
+  overflow-y: auto;
+  border: 1px solid #e2e2e2;
+  background-color: #f9f9f9;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.Message__form {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.Message__form input {
+  height: 30px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding-left: 5px;
+}
+
+.Message__form button {
+  height: 30px;
+  width: 100px;
+  cursor: pointer;
+}
+
+.Message.admin {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+}
+
+.NoChat {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 100%;
+  overflow-y: auto;
+  border: 1px solid #e2e2e2;
+  background-color: #f9f9f9;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+/*# sourceMappingURL=App.module.css.map */
