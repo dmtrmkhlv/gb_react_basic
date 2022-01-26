@@ -1,96 +1,33 @@
-import styles from './styles/App.module.scss';
-import {useState, useEffect, useRef} from 'react';
-import {Message} from "./components";
-import {Button, List, ListItem, Card} from '@mui/material';
-import { nanoid } from 'nanoid';
+import styles from './styles/App.module.css';
+import {Home, Chats, Profile} from "./routes";
+import {Routes, Route, BrowserRouter, Link} from "react-router-dom";
+import {getHomeLink, getProfileLink, getChatsByIdLink, getChats} from "./navigation";
+import {Button, ButtonGroup} from '@mui/material';
 
 function App() {
-  const timeId = useRef(null);
-  const inputFocus = useRef(null);
-  const [messageList, setMessageList] = useState([]);
-  const chatList = [
-    {
-      id:nanoid(),
-      name: "chat #1"
-    },
-    {
-      id:nanoid(),
-      name: "chat #2"
-    },
-    {
-      id:nanoid(),
-      name: "chat #3"
-    }
-  ];
-
-  const getTail = ((array)=>{
-    return array[array.length - 1];
-  });
-
-  const authorIs = ((name, message)=>{
-    return name === message.author;
-  });
-
-  useEffect(() => {
-    inputFocus.current.focus();
-    if (messageList.length === 0) {
-      return;
-    }
-    // if (messageList[messageList.length - 1].author !== "admin") {
-    if (authorIs("user", getTail((messageList) ))) {
-      if (timeId.current) {
-        clearTimeout(timeId.current);
-      }
-      timeId.current = setTimeout(() => {
-        setMessageList([
-          ...messageList, {
-            author: "admin",
-            text: "Hello! We have received your message and will reply soon.",
-            date: Date.now()
-          }
-        ]);
-      }, 1500);
-    }
-  }, [messageList]);
-
   return (
-    <div className={styles.Wrapper}>
-      <Card className={styles.App}>
-        <List className={styles.Chat}>
-        {chatList.map((chat) => {
-                return <ListItem className={styles.Chat__item} key={chat.id}>{chat.name}</ListItem>
-              })}
-        </List>
-        <div className={styles.Message__box}>
-          <div className={styles.Message__wrapper}>
-            <div className={styles.Message__list}>
-              {messageList.map((message) => {
-                return <Message key={message.date} message={message}/>
-              })}
-            </div>
-          </div>
-          <form
-            className={styles.Message__form}
-            onSubmit={(e) => {
-            e.preventDefault();
-            if (e.target.elements.text.value.length > 0) {
-              setMessageList([
-                ...messageList, {
-                  author: "user",
-                  text: e.target.elements.text.value,
-                  date: Date.now()
-                }
-              ]);
-              e.target.reset();
-              inputFocus.current.focus();
-            }
-          }}>
-            <input ref={inputFocus} name="text" type="text"/>
-            <Button type="submit" variant="contained">Send</Button>
-          </form>
-        </div>
-      </Card>
-    </div>
+    <BrowserRouter>
+      <header className={styles.Wrapper}>
+        <ButtonGroup className={styles.App + " " + styles.Header__app} variant="contained" aria-label="outlined primary button group">
+          <Link className={styles.Header__link} to="/">
+            <Button className={styles.Header__button}>Home</Button>
+          </Link>  
+          <Link className={styles.Header__link} to="/profile">
+            <Button className={styles.Header__button}>Profile</Button>
+          </Link>
+          <Link className={styles.Header__link} to="/chats">
+            <Button className={styles.Header__button}>Chats</Button>
+          </Link>
+        </ButtonGroup>
+      </header>
+
+      <Routes>
+        <Route exact path={getHomeLink()} element={< Home />}></Route>
+        <Route path={getProfileLink()} element={< Profile />}></Route>
+        <Route exact path={getChatsByIdLink()} element={< Chats/>}></Route>
+        <Route exact path={getChats()} element={< Chats/>}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

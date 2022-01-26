@@ -1,0 +1,1 @@
+export const getChatsByIdLink = (chatId = ':chatId') => `/chats/${chatId}`;
