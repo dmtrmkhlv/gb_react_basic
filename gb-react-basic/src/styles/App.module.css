@@ -33,6 +33,18 @@
   text-decoration: none;
 }
 
+.Profile input {
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+
+.Profile label {
+  font-size: 25px;
+  line-height: 25px;
+  margin-right: 5px;
+}
+
 .Chat {
   -webkit-box-flex: 1;
       -ms-flex: 1;

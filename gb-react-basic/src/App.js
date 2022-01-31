@@ -3,9 +3,13 @@ import {Home, Chats, Profile} from "./routes";
 import {Routes, Route, BrowserRouter, Link} from "react-router-dom";
 import {getHomeLink, getProfileLink, getChatsByIdLink, getChats} from "./navigation";
 import {Button, ButtonGroup} from '@mui/material';
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 function App() {
   return (
+    <Provider store={store}>
+
     <BrowserRouter>
       <header className={styles.Wrapper}>
         <ButtonGroup className={styles.App + " " + styles.Header__app} variant="contained" aria-label="outlined primary button group">
@@ -28,6 +32,7 @@ function App() {
         <Route exact path={getChats()} element={< Chats/>}></Route>
       </Routes>
     </BrowserRouter>
+    </Provider>
   );
 }
 
