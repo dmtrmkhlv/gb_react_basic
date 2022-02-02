@@ -18,16 +18,16 @@ export const MessageList = (props) => {
   });
 
   const getIndexOf = ((array, searchId) => {
-    return array.indexOf(array.find((chat) => chat.id == searchId));
+    return array.indexOf(array.find((chat) => chat.id === searchId));
   })
 
   const pushNewMessage = (array, chatId, newMessage) => {
-    let currentChatMessages = array.find((chat) => chat.id == chatId).messages;
+    let currentChatMessages = array.find((chat) => chat.id === chatId).messages;
     currentChatMessages = [
       ...currentChatMessages,
       newMessage
     ];
-    let currentIndex = array.indexOf(array.find((chat) => chat.id == chatId));
+    let currentIndex = array.indexOf(array.find((chat) => chat.id === chatId));
     let newChats = [...array];
     newChats[currentIndex].messages = currentChatMessages;
     return newChats;
@@ -66,7 +66,7 @@ export const MessageList = (props) => {
   <> 
     <div className={styles.Message__wrapper}>
         <div data-chat={chatId} className={styles.Message__list}>
-        {chats.find((chat) => chat.id == chatId).messages.map((message) => {
+        {chats.find((chat) => chat.id === chatId).messages.map((message) => {
             return <Message key={message.date} message={message}/>
             })}
         </div>

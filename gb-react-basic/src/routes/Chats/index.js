@@ -30,7 +30,7 @@ export const Chats = (props) => {
 
   const [chats, setChats] = useState(chatList);
   const checkChatId = ((array, searchId)=>{
-    return array.find((chat) => chat.id == searchId);
+    return array.find((chat) => chat.id === searchId);
   });
 
   const addNewChat = ()=>{
@@ -42,7 +42,7 @@ export const Chats = (props) => {
   }
 
   const removeChat = (id)=>{
-    setChats([...chats.filter((chat)=>chat.id != id)]);
+    setChats([...chats.filter((chat)=>chat.id !== id)]);
   }
 
   let messageList;
@@ -62,7 +62,7 @@ export const Chats = (props) => {
         <List className={styles.Chat}>
         {chats.map((chat) => {
             return <Link className={styles.Chat__link} key={chat.id} to={`/chats/${chat.id}`}>
-            <ListItem style={{ backgroundColor: chat.id == chatId ? "#e2e2e2" : "initial" }} className={styles.Chat__item} key={chat.id}>{chat.title}
+            <ListItem style={{ backgroundColor: chat.id === chatId ? "#e2e2e2" : "initial" }} className={styles.Chat__item} key={chat.id}>{chat.title}
               <div onClick={()=>{removeChat(chat.id)}} className={styles.Chat__item__delete}><DeleteOutlinedIcon /></div>
             </ListItem>
         </Link> ;
