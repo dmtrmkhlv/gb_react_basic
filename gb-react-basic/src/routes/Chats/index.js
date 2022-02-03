@@ -1,53 +1,36 @@
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import styles from '../../styles/App.module.css';
 import {MessageList, NoChat} from "../../components";
 import {List, ListItem, Card, Button} from '@mui/material';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { nanoid } from 'nanoid';
 import {Link, useParams } from "react-router-dom";
-
+import { addChatAction, removeChatAction } from "../../store/chats/actions";
 
 export const Chats = (props) => {
 
   const { chatId } = useParams();
-  const chatList = [
-    {
-      id:nanoid(),
-      title: "chat #1",
-      messages: [{author: "admin", date: 1643119846117, text: "Hello…1"}]
-    },
-    {
-      id:2,
-      title: "chat #2",
-      messages: [{author: "admin", date: 1643119846117, text: "Hello…2"}]
-    },
-    {
-      id:3,
-      title: "chat #3",
-      messages: [{author: "admin", date: 1643119846117, text: "Hello…3"}]
-    }
-  ];
+  const chats = useSelector((state) => state.chats.chatList);
+  const [newChatName, setNewChatName] = useState("new chat");
+  const dispatch = useDispatch();
 
-  const [chats, setChats] = useState(chatList);
   const checkChatId = ((array, searchId)=>{
     return array.find((chat) => chat.id == searchId);
   });
 
-  const addNewChat = ()=>{
-    setChats([...chats, {
-      id:nanoid(),
-      title: "new chat",
-      messages: []
-    }])
-  }
+  const addNewChat = useCallback(() => {
+    dispatch(addChatAction(newChatName));
+  }, [dispatch]);
+
 
   const removeChat = (id)=>{
-    setChats([...chats.filter((chat)=>chat.id != id)]);
+    dispatch(removeChatAction(id));
   }
 
   let messageList;
+  
   if(chatId && checkChatId(chats, chatId)){
-    messageList = <MessageList chats={chats} chatId={chatId}/>
+    messageList = <MessageList chatId={chatId}/>
   }
   if(chatId && !checkChatId(chats, chatId)){
     messageList = <NoChat text={`chat #${chatId} doesn't exist`}/>;
@@ -62,7 +45,7 @@ export const Chats = (props) => {
         <List className={styles.Chat}>
         {chats.map((chat) => {
             return <Link className={styles.Chat__link} key={chat.id} to={`/chats/${chat.id}`}>
-            <ListItem style={{ backgroundColor: chat.id == chatId ? "#e2e2e2" : "initial" }} className={styles.Chat__item} key={chat.id}>{chat.title}
+            <ListItem style={{ backgroundColor: +chat.id === +chatId ? "#e2e2e2" : "initial" }} className={styles.Chat__item} key={chat.id}>{chat.title}
               <div onClick={()=>{removeChat(chat.id)}} className={styles.Chat__item__delete}><DeleteOutlinedIcon /></div>
             </ListItem>
         </Link> ;
