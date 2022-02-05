@@ -15,12 +15,12 @@ export const Chats = (props) => {
   const dispatch = useDispatch();
 
   const checkChatId = ((array, searchId)=>{
-    return array.find((chat) => chat.id == searchId);
+    return array.find((chat) => chat.id === searchId);
   });
 
   const addNewChat = useCallback(() => {
     dispatch(addChatAction(newChatName));
-  }, [dispatch]);
+  }, [newChatName, dispatch]);
 
 
   const removeChat = (id)=>{

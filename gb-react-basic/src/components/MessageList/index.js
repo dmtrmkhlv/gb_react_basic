@@ -13,13 +13,14 @@ export const MessageList = (props) => {
 
   const timeId = useRef(null);
   const inputFocus = useRef(null);
+  const scrollToBottom = document.querySelector(`[data-chat='${chatId}']`);
 
   const pushNewMessage = useCallback((e) => {
     e.preventDefault();
     let message = e.target.elements.text.value;
     if (message.length > 0) {
       e.target.reset();
-      dispatch(addMessageWithThunk(chatId, message, e, timeId));
+      dispatch(addMessageWithThunk(chatId, message, scrollToBottom, timeId));
     }
     inputFocus.current.focus();
   }, [chatId, dispatch]);
