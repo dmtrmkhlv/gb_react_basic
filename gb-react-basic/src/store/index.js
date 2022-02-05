@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import {profileReducer} from "./profile/reducer.js";
 import {chatsReducer} from "./chats/reducer.js";

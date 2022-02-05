@@ -14,33 +14,30 @@ export const MessageList = (props) => {
   const timeId = useRef(null);
   const inputFocus = useRef(null);
 
-  const getTail = ((array) => {
-    return array[array?.length - 1];
-  });
-
-  const authorIs = ((name, message) => {
-    return name === message.author;
-  });
+  const addMessageWithThunk = (chatId, message, e) => (dispatch, getState) => {
+    dispatch(addMessageAction(chatId, message));
+    setTimeout(() => {e.target.parentNode.firstChild.firstChild.scrollIntoView({block: "end", behavior: "smooth"});
+     }, 0);
+    if (message.author !== "admin") {
+        if (timeId.current) {
+          clearTimeout(timeId.current);
+        }
+       const botMessage = "Hello! We have received your message and will reply soon.";
+       timeId.current = setTimeout(() => {
+         dispatch(addMessageAction(chatId, botMessage, "admin"));
+         e.target.parentNode.firstChild.firstChild.scrollIntoView({block: "end", behavior: "smooth"});
+        }, 1500);
+    }
+  }
 
   const pushNewMessage = useCallback((e) => {
     e.preventDefault();
     let message = e.target.elements.text.value;
     if (message.length > 0) {
       e.target.reset();
-      inputFocus.current.focus();
-      dispatch(addMessageAction(chatId, message));
-      let scrollToBottom = document.querySelector(`[data-chat='${chatId}']`);
-      scrollToBottom.scrollIntoView(false);
-
-      if (authorIs("user", getTail((messageList[chatId])))) {
-        if (timeId.current) {
-          clearTimeout(timeId.current);
-        }
-        timeId.current = setTimeout(() => {
-          dispatch(addMessageAction(chatId, "Hello! We have received your message and will reply soon.", "admin"));
-        }, 1500);
-      }
+      dispatch(addMessageWithThunk(chatId, message, e));
     }
+    inputFocus.current.focus();
   }, [dispatch]);
 
   return ( 
