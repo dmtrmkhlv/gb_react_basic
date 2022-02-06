@@ -6,7 +6,6 @@ import {getHomeLink, getProfileLink, getChatsByIdLink, getChats} from "./navigat
 import {Button, ButtonGroup} from '@mui/material';
 import { Provider } from "react-redux";
 import { store, persistor } from "./store";
-{/* <CircularProgress /> */}
 
 function App() {
   return (

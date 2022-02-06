@@ -1,11 +1,11 @@
 import {useCallback} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import styles from '../../styles/App.module.css';
-
+import {getProfilesFromReducer} from "../../store/profile/selectors";
 import { changeProjectAction } from "../../store/profile/actions";
 
 export const Profile = (props) => {
-  const { isShow, name } = useSelector((state) => state);
+  const { isShow, name } = useSelector(getProfilesFromReducer);
 
   const dispatch = useDispatch();
 

@@ -1,29 +1,13 @@
-import {useCallback, useRef} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Message} from "../";
+import {Message} from "../Message";
 import styles from '../../styles/App.module.css';
 import {Button} from '@mui/material';
-import {addMessageWithThunk} from "../../store/messages/actions";
-import {getMessagesFromReducer} from "../../store/messages/selectors";
+import {chatIsExist} from "../../hocs/chatIsExist"
 
-export const MessageList = (props) => {
-  const messageList = useSelector(getMessagesFromReducer);
+const MessageListRender= (props) => {
   const chatId = props.chatId;
-  const dispatch = useDispatch();
-
-  const timeId = useRef(null);
-  const inputFocus = useRef(null);
-  const scrollToBottom = document.querySelector(`[data-chat='${chatId}']`);
-
-  const pushNewMessage = useCallback((e) => {
-    e.preventDefault();
-    let message = e.target.elements.text.value;
-    if (message.length > 0) {
-      e.target.reset();
-      dispatch(addMessageWithThunk(chatId, message, scrollToBottom, timeId));
-    }
-    inputFocus.current.focus();
-  }, [chatId, dispatch]);
+  const messageList = props.messageList;
+  const pushNewMessage = props.pushNewMessage;
+  const inputFocus = props.inputFocus;
 
   return ( 
     <> 
@@ -41,3 +25,5 @@ export const MessageList = (props) => {
     </>
   );
 };
+
+export const MessageList = chatIsExist(MessageListRender);

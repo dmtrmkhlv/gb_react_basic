@@ -1,4 +1,4 @@
-import { ADD_MESSAGE } from "./actions";
+import { ADD_MESSAGE, DELETE_MESSAGES } from "./actions";
 import { nanoid } from 'nanoid';
 
 const initialState = {
@@ -10,6 +10,14 @@ const initialState = {
 
 export const messagesReducer = (state = initialState, action) => {
   switch (action.type) {
+    case DELETE_MESSAGES:{
+      delete state.messageList[action.chatId];
+      return{
+        ...state,
+        messageList: state.messageList,
+      }
+
+    }
     case ADD_MESSAGE: {
       const currentList = state.messageList[action.chatId] || [];
 
