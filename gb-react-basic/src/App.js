@@ -1,8 +1,8 @@
 import { PersistGate } from 'redux-persist/integration/react'
 import styles from './styles/App.module.css';
-import {Home, Chats, Profile} from "./routes";
+import {Home, Chats, Profile, Gists} from "./routes";
 import {Routes, Route, BrowserRouter, Link} from "react-router-dom";
-import {getHomeLink, getProfileLink, getChatsByIdLink, getChats} from "./navigation";
+import {getHomeLink, getProfileLink, getChatsByIdLink, getChats, getGists} from "./navigation";
 import {Button, ButtonGroup} from '@mui/material';
 import { Provider } from "react-redux";
 import { store, persistor } from "./store";
@@ -23,6 +23,9 @@ function App() {
               <Link className={styles.Header__link} to="/chats">
                 <Button className={styles.Header__button}>Chats</Button>
               </Link>
+              <Link className={styles.Header__link} to="/gists">
+                <Button className={styles.Header__button}>Gists</Button>
+              </Link>
             </ButtonGroup>
           </header>
 
@@ -31,6 +34,7 @@ function App() {
             <Route path={getProfileLink()} element={< Profile />}></Route>
             <Route exact path={getChatsByIdLink()} element={< Chats/>}></Route>
             <Route exact path={getChats()} element={< Chats/>}></Route>
+            <Route exact path={getGists()} element={< Gists/>}></Route>
           </Routes>
         </BrowserRouter>
       </PersistGate>
