@@ -10,13 +10,15 @@ import { deleteMessagesAction } from "../../store/messages/actions";
 import {getMessagesFromReducer} from "../../store/messages/selectors";
 import {getChatsFromReducer} from "../../store/chats/selectors";
 import {useMessageInput} from "../../hooks/useMessageInput";
+import {useMoveToLastMessage} from "../../hooks/useMoveToLastMessage";
 
 export const Chats = (props) => {
 
   const { chatId } = useParams();
   const chats = useSelector(getChatsFromReducer);
   const messageList = useSelector(getMessagesFromReducer);
-  const{pushNewMessage, inputFocus} = useMessageInput({chatId})
+  const{pushNewMessage, inputFocus} = useMessageInput({chatId});
+  const {moveToLastMessage} = useMoveToLastMessage({chatId});
   const [newChatName, setNewChatName] = useState("new chat");
   const dispatch = useDispatch();
 
@@ -37,7 +39,7 @@ export const Chats = (props) => {
         <List className={styles.Chat}>
         {chats.map((chat) => {
             return <Link className={styles.Chat__link} key={chat.id} to={`/chats/${chat.id}`}>
-            <ListItem style={{ backgroundColor: +chat.id === +chatId ? "#e2e2e2" : "initial" }} className={styles.Chat__item} key={chat.id}>{chat.title}
+            <ListItem onClick={()=>{moveToLastMessage(chat.id)}} style={{ backgroundColor: +chat.id === +chatId ? "#e2e2e2" : "initial" }} className={styles.Chat__item} key={chat.id}>{chat.title}
               <div onClick={()=>{removeChat(chat.id)}} className={styles.Chat__item__delete}><DeleteOutlinedIcon /></div>
             </ListItem>
         </Link> ;
