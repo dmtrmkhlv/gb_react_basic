@@ -1,47 +1,13 @@
-import {useCallback, useEffect, useRef} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Message} from "../";
+import {Message} from "../Message";
 import styles from '../../styles/App.module.css';
 import {Button} from '@mui/material';
-import {addMessageAction} from "../../store/messages/actions";
-import {getMessagesFromReducer} from "../../store/messages/selectors";
+import {chatIsExist} from "../../hocs/chatIsExist"
 
-export const MessageList = (props) => {
-  const messageList = useSelector(getMessagesFromReducer);
+const MessageListRender= (props) => {
   const chatId = props.chatId;
-  const dispatch = useDispatch();
-
-  const timeId = useRef(null);
-  const inputFocus = useRef(null);
-
-  const getTail = ((array) => {
-    return array[array?.length - 1];
-  });
-
-  const authorIs = ((name, message) => {
-    return name === message.author;
-  });
-
-  const pushNewMessage = useCallback((e) => {
-    e.preventDefault();
-    let message = e.target.elements.text.value;
-    if (message.length > 0) {
-      e.target.reset();
-      inputFocus.current.focus();
-      dispatch(addMessageAction(chatId, message));
-      let scrollToBottom = document.querySelector(`[data-chat='${chatId}']`);
-      scrollToBottom.scrollIntoView(false);
-
-      if (authorIs("user", getTail((messageList[chatId])))) {
-        if (timeId.current) {
-          clearTimeout(timeId.current);
-        }
-        timeId.current = setTimeout(() => {
-          dispatch(addMessageAction(chatId, "Hello! We have received your message and will reply soon.", "admin"));
-        }, 1500);
-      }
-    }
-  }, [dispatch]);
+  const messageList = props.messageList;
+  const pushNewMessage = props.pushNewMessage;
+  const inputFocus = props.inputFocus;
 
   return ( 
     <> 
@@ -59,3 +25,5 @@ export const MessageList = (props) => {
     </>
   );
 };
+
+export const MessageList = chatIsExist(MessageListRender);

@@ -1,0 +1,1 @@
+export const getProfilesFromReducer = (state) => state.profile;
