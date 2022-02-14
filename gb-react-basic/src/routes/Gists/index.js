@@ -6,61 +6,20 @@ import { getAllGists } from "../../store/gists/actions";
 
 export const Gists = (props) => {
 
-  //  const initialState = {
-  //   page: 1,
-  //   per_page: 6,
-  //   total: 12,
-  //   total_pages: 0,
-  //   data: [],
-  // }
-
-  //  const [gists, setGists] = useState(initialState);
-  //  const [error, setError] = useState(false);
-  //  const [loading, setLoading] = useState(false);
-
    const dispatch = useDispatch();
-
    const gists = useSelector(selectGists);
    const error = useSelector(selectGistsError);
    const loading = useSelector(selectGistsLoading);
 
-  //  const reset = () => {
-  //   setGists(initialState);
-  // }
-
   const requestGists = () => {
     dispatch(getAllGists());
   };
-
-
-  //  const requestGists = async () => {
-  //   setLoading(true);
-  //   setError(false);
-
-  //   try {
-  //     const response = await fetch(API_URL_PUBLIC);
-
-  //     if (!response.ok) {
-  //       throw new Error(`Request failed with status ${response.status}`);
-  //     }
-
-  //     const result = await response.json();
-
-  //     setGists(result);
-  //   } catch (err) {
-  //     setError(true);
-  //     console.warn(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   useEffect(() => {
     requestGists();
   }, []);
 
   const reload = ()=>{
-    // reset();
     requestGists();
   }
 
@@ -86,7 +45,7 @@ export const Gists = (props) => {
           </div>
         }
         {
-        loading && <p className={styles.App}>Loading...</p>
+        loading == 1 && <p className={styles.App}>Loading...</p>
       }
         {gists?.data?.map(renderGist)}
     </div>

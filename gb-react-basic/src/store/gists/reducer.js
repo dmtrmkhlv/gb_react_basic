@@ -1,3 +1,12 @@
+import { GET_GISTS_REQUEST, GET_GISTS_SUCCESS, GET_GISTS_FAILURE } from "./actions";
+
+export const STATUSES = {
+  IDLE: 0,
+  REQUEST: 1,
+  SUCCESS: 2,
+  FAILURE: 3,
+}
+
 const initialState = {
   gists: {
     page: 1,
@@ -10,14 +19,7 @@ const initialState = {
   error: null,
 };
 
-export const STATUSES = {
-  IDLE: 0,
-  REQUEST: 1,
-  SUCCESS: 2,
-  FAILURE: 3,
-}
-
-const gistsReducer = (state = initialState, action) => {
+export const gistsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_GISTS_REQUEST:
       return {
@@ -27,12 +29,13 @@ const gistsReducer = (state = initialState, action) => {
     case GET_GISTS_SUCCESS:
       return {
         ...state,
-        articles: action.payload,
+        gists: action.payload,
         request: STATUSES.SUCCESS,
+        error: null,
       };
     case GET_GISTS_FAILURE:
       return {
-        ...state,
+        ...initialState,
         request: STATUSES.FAILURE,
         error: action.payload,
       };
@@ -40,5 +43,3 @@ const gistsReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default gistsReducer;
