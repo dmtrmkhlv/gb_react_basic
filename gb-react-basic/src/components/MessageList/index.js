@@ -1,7 +1,7 @@
 import {Message} from "../Message";
 import styles from '../../styles/App.module.css';
 import {Button} from '@mui/material';
-import {chatIsExist} from "../../hocs/chatIsExist"
+import {chatIsExist} from "../../hocs"
 
 const MessageListRender= (props) => {
   const chatId = props.chatId;
