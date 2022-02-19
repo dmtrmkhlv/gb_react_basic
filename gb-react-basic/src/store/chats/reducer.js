@@ -1,42 +1,39 @@
-import { ADD_CHAT, REMOVE_CHAT } from "./actions";
-import { nanoid } from 'nanoid';
+import {ADD_CHAT_SUCCESS, ADD_CHAT_LOADING, REMOVE_CHAT, RESET_CHAT} from "./actions";
+
 
 const initialState = {
-  chatList: [
-    {
-        id:"1",
-        title: "chat #1",
-      },
-      {
-        id:"2",
-        title: "chat #2",
-      },
-      {
-        id:"3",
-        title: "chat #3",
-      }
-  ],
-};
+  chats: [],
+  isLoading: false,
+}
 
 export const chatsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_CHAT:
+    case ADD_CHAT_LOADING: {
       return {
         ...state,
-        chatList: [
-          ...state.chatList,
-          {
-            id: `id${nanoid()}`,
-            title: action.title,
-          },
-        ],
-      };
-      case REMOVE_CHAT:
-          return{
-              ...state,
-              chatList: [...state.chatList.filter((chat)=>chat.id !== action.id)]
-          }
-    default:
+        isLoading: action.payload,
+      }
+    }
+    case ADD_CHAT_SUCCESS: {
+      return {
+        ...state,
+        chats: [
+          ...state.chats,
+          action.payload,
+        ]
+      }
+    }
+    case REMOVE_CHAT: {
+      return {
+        ...state,
+        chats: state.chats.filter((item) => item.id !== action.payload),
+      }
+    }
+    case RESET_CHAT: {
+      return initialState;
+    }
+    default: {
       return state;
+    }
   }
-};
+}

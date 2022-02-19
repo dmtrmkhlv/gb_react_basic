@@ -7,6 +7,7 @@ import {Routes, Route, BrowserRouter, Link} from "react-router-dom";
 import { PublicRoute, PrivateRoute } from "../../hocs";
 import {getHomeLink, getProfileLink, getChatsByIdLink, getChats, getGists, getSingUp, getLogin} from "../../navigation";
 import {Button, ButtonGroup} from '@mui/material';
+import {auth} from "../../services/firebase";
 export const AllRoutes = () => {
 
   const isAuth = useSelector(getIsAuth);
@@ -34,10 +35,13 @@ export const AllRoutes = () => {
                 <Button className={styles.Header__button}>Gists</Button>
               </Link>
               <Link className={styles.Header__link} to="/SingUp">
-                <Button className={styles.Header__button}>Registration</Button>
+              {!isAuth && <Button className={styles.Header__button}>Registration</Button>}
               </Link>
               <Link className={styles.Header__link} to="/login">
-                <Button className={styles.Header__button}>Login</Button>
+              {!isAuth && <Button className={styles.Header__button}>Login</Button> }
+              </Link>
+              <Link className={styles.Header__link} to="/">
+              {isAuth &&  <Button onClick={()=>{auth.signOut();}} className={styles.Header__button}>LogOut</Button>}
               </Link>
             </ButtonGroup>
           </header>

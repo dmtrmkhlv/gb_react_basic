@@ -1,17 +1,36 @@
+import {messagesRef} from "../../services/firebase"
 export const ADD_MESSAGE = 'MESSAGES_ADD_MESSAGE';
-export const DELETE_MESSAGES = 'MESSAGES_DELETE_MESSAGES';
+export const DELETE_MESSAGE = 'MESSAGES_DELETE_MESSAGE';
+export const CHANGE_MESSAGE_TEXT = 'CHANGE_MESSAGE_TEXT';
+export const REMOVE_ALL_MESSAGES_BY_CHAT_ID = 'REMOVE_ALL_MESSAGES_BY_CHAT_ID'
 
-export const addMessageAction = (chatId, message, author) => ({
+
+export const addMessageAction = (chatId, message) => ({
   type: ADD_MESSAGE,
-  chatId,
-  message,
-  author,
+  payload: {
+    chatId,
+    message
+  },
 });
 
-export const deleteMessagesAction = (chatId) => ({
-  type: DELETE_MESSAGES,
-  chatId
+export const deleteMessagesAction = (messageId) => ({
+  type: DELETE_MESSAGE,
+  messageId
 });
+
+export const deleteAllMessagesByChatIdAction = (chatId) => ({
+  type: REMOVE_ALL_MESSAGES_BY_CHAT_ID,
+  payload: chatId
+});
+
+export const changeMessage = (chatId,messageId, text) => ({
+  type: CHANGE_MESSAGE_TEXT,
+  payload: {
+    chatId,
+    id: messageId,
+    text
+  }
+})
 
 export const addMessageWithThunk = (chatId, message, timeId) => (dispatch, getState) => {
   dispatch(addMessageAction(chatId, message));
@@ -25,4 +44,50 @@ export const addMessageWithThunk = (chatId, message, timeId) => (dispatch, getSt
        dispatch(addMessageAction(chatId, botMessage, "admin"));
       }, 1500);
   }
+}
+
+export const addMessagesCommand = (chatID, message) => () => {
+  messagesRef.child(chatID).push(message, (error) => {
+    if (error) {
+      console.log(error);
+    }
+  })
+}
+
+export const addMessagesTracker = (chatID) => (dispatch) => {
+  messagesRef.child(chatID).on('child_added', (snapshot) => {
+    let message = snapshot.val();
+    message.id = snapshot.key;
+    dispatch(addMessageAction(chatID, message))
+  })
+}
+
+export const addMessagesOffTracker = (chatID) =>  (dispatch) => {
+  dispatch(deleteAllMessagesByChatIdAction(chatID));
+  messagesRef.child(chatID).off('child_added');
+}
+
+export const removeMessagesCommand = () => {
+
+}
+export const removeMessagesTracker = () => {}
+export const removeMessagesOffTracker = () => {}
+
+
+export const changeMessagesCommand = (chatID,messageId, text) => (dispatch)=> {
+  messagesRef.child(chatID).child(messageId).update({
+    text
+  }, (error) => {
+    if (error) {
+      console.log(error);
+    }
+  })
+}
+export const changeMessagesTracker = (chatID) => (dispatch) => {
+  messagesRef.child(chatID).on('child_changed', (snapshot) => {
+    dispatch(changeMessage(chatID, snapshot.key, snapshot.val().text));
+  })
+}
+export const changeMessagesOffTracker = (chatID) => () => {
+  messagesRef.child(chatID).off('child_changed')
 }

@@ -26,13 +26,14 @@ const rootReducer = combineReducers({
 });
 
 // оборачиваем редьюсеры в persist
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // создаем store с использованием persistedReducer
 export const store = createStore(
-    persistedReducer,
+    rootReducer,
+    // persistedReducer,
     composeEnhancers(applyMiddleware(thunk))
 );
 
 // создаем persistor
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);

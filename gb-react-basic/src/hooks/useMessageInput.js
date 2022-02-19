@@ -1,6 +1,6 @@
-import {useCallback, useRef} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 import {useDispatch} from "react-redux";
-import {addMessageWithThunk} from "../store/messages/actions";
+import {addMessagesCommand, addMessagesTracker, addMessagesOffTracker} from "../store/messages/actions";
 import {useMoveToLastMessage} from "./useMoveToLastMessage";
 
 
@@ -10,14 +10,25 @@ export const useMessageInput = ({chatId}) => {
     const inputFocus = useRef(null);
     const dispatch = useDispatch();
     const {moveToLastMessage} = useMoveToLastMessage({chatId});
+
+    useEffect(()=>{
+      dispatch(addMessagesTracker(chatId));
+      return() => {
+        dispatch(addMessagesOffTracker(chatId))
+      }
+     
+    },[chatId])
   
     const pushNewMessage = useCallback((e) => {
         e.preventDefault();
-    
-        let message = e.target.elements.text.value;
-        if (message.length > 0) {
+   
+        let message = {
+          text: e.target.elements.text.value,
+          author: "user"
+        };
+        if (message.text.length > 0) {
           e.target.reset();
-          dispatch(addMessageWithThunk(chatId, message, timeId));
+          dispatch(addMessagesCommand(chatId, message));
           moveToLastMessage(chatId)
         }
         inputFocus.current.focus();
@@ -27,4 +38,6 @@ export const useMessageInput = ({chatId}) => {
         pushNewMessage,
         inputFocus
     }
+
+
   }

@@ -5,7 +5,6 @@ import styles from '../../styles/App.module.css';
 import {getProfilesFromReducer} from "../../store/profile/selectors";
 import { changeProjectAction } from "../../store/profile/actions";
 import { getUser } from "../../store/user/reducer";
-import {auth} from "../../services/firebase";
 
 export const Profile = (props) => {
   const user = useSelector(getUser);
@@ -20,7 +19,6 @@ export const Profile = (props) => {
 
   return (
     <div className={styles.Wrapper + " " + styles.Profile}>
-      <button onClick={()=>{auth.signOut();}}>LogOut</button>
         <h1 className={styles.App}>Profile</h1>
         <div className={styles.App}>
         {/* <ReactJson src={user?.toJSON()} /> */}
