@@ -1,4 +1,5 @@
 import { auth } from "../../services/firebase";
+import {userApi} from "../../services/request/user";
 
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
@@ -13,7 +14,9 @@ export const logoutUserAction = () => ({
 });
 
 export const initAuthAction = (dispatch) => {
-    auth.onAuthStateChanged((user) => {
+    // auth.onAuthStateChanged
+    userApi.initAuth
+    ((user) => {
         if (user) {
             dispatch(loginUserAction(user));
         } else {

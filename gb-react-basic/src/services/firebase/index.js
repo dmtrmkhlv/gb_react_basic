@@ -17,7 +17,6 @@ export const db = firebase.database();
 
 // export const rootRef = db.ref("root");
 
-// export const profileRef = db.ref("profile");
 export const profileRef = db.ref("profile");
 export const chatRef = db.ref("chats");
 export const messagesRef = db.ref("messages");

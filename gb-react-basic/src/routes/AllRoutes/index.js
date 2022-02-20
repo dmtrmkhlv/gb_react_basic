@@ -8,6 +8,7 @@ import { PublicRoute, PrivateRoute } from "../../hocs";
 import {getHomeLink, getProfileLink, getChatsByIdLink, getChats, getGists, getSingUp, getLogin} from "../../navigation";
 import {Button, ButtonGroup} from '@mui/material';
 import {auth} from "../../services/firebase";
+import {userApi} from "../../services/request/user";
 export const AllRoutes = () => {
 
   const isAuth = useSelector(getIsAuth);
@@ -41,7 +42,7 @@ export const AllRoutes = () => {
               {!isAuth && <Button className={styles.Header__button}>Login</Button> }
               </Link>
               <Link className={styles.Header__link} to="/">
-              {isAuth &&  <Button onClick={()=>{auth.signOut();}} className={styles.Header__button}>LogOut</Button>}
+              {isAuth &&  <Button onClick={()=>{userApi.logout();}} className={styles.Header__button}>LogOut</Button>}
               </Link>
             </ButtonGroup>
           </header>

@@ -34,7 +34,6 @@ export const changeMessage = (chatId,messageId, text) => ({
 })
 
 export const addMessageWithThunk = (chatID, message, timeId, moveToLastMessage) => (dispatch, getState) => {
-  // dispatch(addMessageAction(chatId, message));
 
   if (message.author !== "admin") {
     if (timeId.current) {
