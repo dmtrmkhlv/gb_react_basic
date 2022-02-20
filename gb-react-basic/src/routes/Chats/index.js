@@ -29,7 +29,7 @@ export const Chats = (props) => {
       dispatch(addChatOffTracker);
       dispatch(removeChatOffTracker);
     }
-  },[])
+  },[dispatch])
 
   const addNewChat = useCallback(() => {
     dispatch(addChatAction({title: newChatName}));

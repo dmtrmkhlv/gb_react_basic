@@ -1,4 +1,5 @@
 import firebase from "firebase";
+require('firebase/auth')
 
 const firebaseConfig = {
   apiKey: "AIzaSyBS2bbCRyQW7ds34Be2B1567QOcEfP4bu4",
@@ -18,5 +19,5 @@ export const db = firebase.database();
 
 // export const profileRef = db.ref("profile");
 export const profileRef = db.ref("profile");
-export const chatRef = db.ref('chats');
-export const messagesRef = db.ref('messages');
+export const chatRef = db.ref("chats");
+export const messagesRef = db.ref("messages");

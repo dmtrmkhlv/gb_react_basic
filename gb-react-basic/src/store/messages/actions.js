@@ -1,4 +1,5 @@
-import {messagesRef} from "../../services/firebase"
+import {messagesRef} from "../../services/firebase";
+import { nanoid } from 'nanoid';
 export const ADD_MESSAGE = 'MESSAGES_ADD_MESSAGE';
 export const DELETE_MESSAGE = 'MESSAGES_DELETE_MESSAGE';
 export const CHANGE_MESSAGE_TEXT = 'CHANGE_MESSAGE_TEXT';
@@ -32,18 +33,21 @@ export const changeMessage = (chatId,messageId, text) => ({
   }
 })
 
-export const addMessageWithThunk = (chatId, message, timeId) => (dispatch, getState) => {
-  dispatch(addMessageAction(chatId, message));
+export const addMessageWithThunk = (chatID, message, timeId, moveToLastMessage) => (dispatch, getState) => {
+  // dispatch(addMessageAction(chatId, message));
 
   if (message.author !== "admin") {
-      if (timeId.current) {
-        clearTimeout(timeId.current);
-      }
-     const botMessage = "Hello! We have received your message and will reply soon.";
-     timeId.current = setTimeout(() => {
-       dispatch(addMessageAction(chatId, botMessage, "admin"));
-      }, 1500);
-  }
+    if (timeId.current) {
+      clearTimeout(timeId.current);
+    }
+    message.text = "Hello! We have received your message and will reply soon.";
+    message.author = "admin";
+    message.id = nanoid();
+   timeId.current = setTimeout(() => {
+     dispatch(addMessageAction(chatID, message));
+     moveToLastMessage(chatID);
+    }, 1500);
+}
 }
 
 export const addMessagesCommand = (chatID, message) => () => {
@@ -58,7 +62,7 @@ export const addMessagesTracker = (chatID) => (dispatch) => {
   messagesRef.child(chatID).on('child_added', (snapshot) => {
     let message = snapshot.val();
     message.id = snapshot.key;
-    dispatch(addMessageAction(chatID, message))
+    dispatch(addMessageAction(chatID, message));
   })
 }
 
