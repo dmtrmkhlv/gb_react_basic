@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {auth} from "../../services/firebase";
+import {userApi} from "../../services/request/user";
 
 export const SingUp = () => {
     const { push } = useNavigate();
@@ -20,8 +21,10 @@ export const SingUp = () => {
         e.preventDefault();
 
         try {
-            await auth.createUserWithEmailAndPassword(email, password);
+            // await auth.createUserWithEmailAndPassword(email, password);
+            await userApi.login(email, password);
             push("/profile");
+
         } catch (e) {
             setError(e);
         }

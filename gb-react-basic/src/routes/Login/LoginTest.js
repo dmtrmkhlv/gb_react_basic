@@ -1,7 +1,4 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {auth} from "../../services/firebase";
-import {userApi} from "../../services/request/user"
+import React  from "react";
 
 export const LoginFormTestIds = {
     submit: 'LoginForm-submit',
@@ -9,34 +6,19 @@ export const LoginFormTestIds = {
     passwordField: 'LoginForm-passwordField',
   }
 
-export const Login = ({setFieldValue, getFieldValue, onSubmit}) => {
-    const { push } = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-
+export const LoginTest = ({setFieldValue, getFieldValue, onSubmit}) => {
+    
     const handlePassChange = (e) => {
-        setPassword(e.target.value);
         setFieldValue('password', e.target.value);
     };
 
     const handleEmailChange = (e) => {
-        setEmail(e.target.value);
         setFieldValue('login', e.target.value);
     };
 
-    const handleSubmit = async (e) => {
-        console.log(email, password);
+    const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit('test');
-        try {
-            // await auth.signInWithEmailAndPassword(email, password);
-            await userApi.registration(email, password);
-
-            push("/profile");
-        } catch (e) {
-            setError(e);
-        }
     };
 
     return (
@@ -49,7 +31,6 @@ export const Login = ({setFieldValue, getFieldValue, onSubmit}) => {
                     placeholder="Enter email"
                     name="email"
                     onChange={handleEmailChange}
-                    value={email}
                     data-testid={LoginFormTestIds.loginField}
                 />
             </div>
@@ -61,20 +42,14 @@ export const Login = ({setFieldValue, getFieldValue, onSubmit}) => {
                     placeholder="Password"
                     name="password"
                     onChange={handlePassChange}
-                    value={password}
                     data-testid={LoginFormTestIds.passwordField}
                 />
             </div>
 
-            {error && <div>{error.toString()}</div>}
-
             <button variant="primary" type="submit" data-testid={LoginFormTestIds.submit}>
                 Submit
             </button>
-            <hr />
-            <p>
-                Already have an account? <Link to="/SingUp">Sign up</Link>
-            </p>
+
         </form>
     );
 };

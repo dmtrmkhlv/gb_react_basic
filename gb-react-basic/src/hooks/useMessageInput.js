@@ -42,6 +42,4 @@ export const useMessageInput = ({chatId}) => {
         pushNewMessage,
         inputFocus
     }
-
-
   }

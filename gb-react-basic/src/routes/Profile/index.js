@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import ReactJson from "react-json-view";
 import styles from '../../styles/App.module.css';
 import {getProfilesFromReducer} from "../../store/profile/selectors";
-import { changeProjectAction } from "../../store/profile/actions";
+import { changeProfileStatusAction } from "../../store/profile/actions";
 import { getUser } from "../../store/user/reducer";
 
 export const Profile = (props) => {
@@ -14,14 +14,13 @@ export const Profile = (props) => {
   const dispatch = useDispatch();
 
   const setShowName = useCallback(() => {
-    dispatch(changeProjectAction());
+    dispatch(changeProfileStatusAction());
   }, [dispatch]);
 
   return (
     <div className={styles.Wrapper + " " + styles.Profile}>
         <h1 className={styles.App}>Profile</h1>
         <div className={styles.App}>
-        {/* <ReactJson src={user?.toJSON()} /> */}
         {<label>{name}</label>}
           <input 
             type="checkbox" 
@@ -32,6 +31,9 @@ export const Profile = (props) => {
             onChange={setShowName}
           ></input>
           <span>{isShow ? "on" : "off"}</span>
+        </div>
+        <div className={styles.App}>
+          <ReactJson src={user?.toJSON()} />
         </div>
     </div>
   );
