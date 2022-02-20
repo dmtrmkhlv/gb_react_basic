@@ -6,6 +6,7 @@ import {profileReducer} from "./profile/reducer.js";
 import {chatsReducer} from "./chats/reducer.js";
 import {messagesReducer} from "./messages/reducer.js";
 import {gistsReducer} from "./gists/reducer.js";
+import {userReducer} from "./user/reducer.js";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -20,17 +21,19 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     chats: chatsReducer,
     messages: messagesReducer,
-    gists: gistsReducer
+    gists: gistsReducer,
+    user: userReducer,
 });
 
 // оборачиваем редьюсеры в persist
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // создаем store с использованием persistedReducer
 export const store = createStore(
-    persistedReducer,
+    rootReducer,
+    // persistedReducer,
     composeEnhancers(applyMiddleware(thunk))
 );
 
 // создаем persistor
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);

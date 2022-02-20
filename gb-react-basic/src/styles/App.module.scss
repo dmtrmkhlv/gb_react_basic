@@ -96,9 +96,10 @@
 
   &__wrapper {
     overflow-y: auto;
-    height: 600px;
+    height: 80vh;
   }
 
+  
   &__list {
     display: flex;
     justify-content: flex-end;

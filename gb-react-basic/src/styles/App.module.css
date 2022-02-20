@@ -116,7 +116,7 @@
 
 .Message__wrapper {
   overflow-y: auto;
-  height: 600px;
+  height: 80vh;
 }
 
 .Message__list {

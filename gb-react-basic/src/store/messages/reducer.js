@@ -1,41 +1,50 @@
-import { ADD_MESSAGE, DELETE_MESSAGES } from "./actions";
-import { nanoid } from 'nanoid';
+import { 
+  ADD_MESSAGE,
+  DELETE_MESSAGE,
+  CHANGE_MESSAGE_TEXT,
+  REMOVE_ALL_MESSAGES_BY_CHAT_ID
+ } from "./actions";
 
 const initialState = {
   // to be stored like this {[chatId]: [{id, text, author}]}
-  messageList: {
-    1: [{id: "1DbpNUXY9tYqea7hUcxQ",author: "admin", date: 1643119846117, text: "Hello…1"}]
+  messages: {
   },
 };
 
 export const messagesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case DELETE_MESSAGES:{
-      delete state.messageList[action.chatId];
-      return{
-        ...state,
-        messageList: state.messageList,
-      }
-
-    }
     case ADD_MESSAGE: {
-      const currentList = state.messageList[action.chatId] || [];
-
+       const currentMessageList = state.messages[action.payload.chatId] || [];
       return {
         ...state,
-        messageList: {
-          ...state.messageList,
-          [action.chatId]: [
-            ...currentList,
-            {
-              id: action.chatId + nanoid(),
-              author: action.author || "user",
-              text: action.message,
-              date: new Date(),
-            },
+        messages: {
+          ...state.messages,
+          [action.payload.chatId]: [
+            ...currentMessageList,
+            action.payload.message,
           ],
         },
       };
+    }
+    case DELETE_MESSAGE:{
+      const copyMessages = {...state.messages};
+
+      delete copyMessages[action.payload];
+      return {
+        ...state,
+        messages: copyMessages,
+      }
+    }
+    case REMOVE_ALL_MESSAGES_BY_CHAT_ID: {
+
+      const copyMessages = {...state.messages};
+
+      delete copyMessages[action.payload];
+
+      return {
+        ...state,
+        messages: copyMessages,
+      }
     }
     default:
       return state;

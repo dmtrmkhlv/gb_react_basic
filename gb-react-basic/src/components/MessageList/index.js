@@ -1,11 +1,11 @@
 import {Message} from "../Message";
 import styles from '../../styles/App.module.css';
 import {Button} from '@mui/material';
-import {chatIsExist} from "../../hocs/chatIsExist"
+import {chatIsExist} from "../../hocs"
 
 const MessageListRender= (props) => {
   const chatId = props.chatId;
-  const messageList = props.messageList;
+  const messages = props.messages.messages;
   const pushNewMessage = props.pushNewMessage;
   const inputFocus = props.inputFocus;
 
@@ -13,7 +13,7 @@ const MessageListRender= (props) => {
     <> 
       <div className={styles.Message__wrapper}>
         <div data-chat={chatId} className={styles.Message__list}>
-          {messageList[chatId]?.map((message) => {
+          {messages[chatId]?.map((message) => {
               return <Message key={message.id} message={message}/>
             })}
         </div>
